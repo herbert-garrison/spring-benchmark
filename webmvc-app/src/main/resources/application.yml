@@ -1,0 +1,58 @@
+server:
+  port: 8080
+  tomcat:
+    threads:
+      max: 200
+
+spring:
+  application:
+    name: webmvc-benchmark
+  threads:
+    virtual:
+      enabled: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 500MB
+      max-request-size: 500MB
+
+  datasource:
+    url: jdbc:postgresql://<TODO_HOST>:5432/benchmark
+    username: benchmark
+    password: benchmark
+    schema: public
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 10
+      pool-name: BenchmarkHikariPool
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+  kafka:
+    bootstrap-servers: <TODO_HOST>:9092
+
+s3:
+  endpoint: <TODO_HOST>
+  access-key: minioadmin
+  secret-key: minioadmin
+  region: us-east-1
+  bucket: benchmark-bucket
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+  metrics:
+    tags:
+      app: webmvc-benchmark
+  endpoint:
+    prometheus:
+      enabled: true
+
+logging:
+  level:
+    com.benchmark: INFO
